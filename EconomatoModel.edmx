@@ -1,0 +1,304 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="EconomatoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Artigos">
+          <Key>
+            <PropertyRef Name="IdArtigo" />
+          </Key>
+          <Property Name="IdArtigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NomeArtigo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Preco" Type="money" />
+          <Property Name="StockMinimo" Type="int" />
+          <Property Name="IdEntidade" Type="int" />
+          <Property Name="IdTipoDeArtigo" Type="int" />
+          <Property Name="IdMovimento" Type="int" />
+        </EntityType>
+        <EntityType Name="Entidades">
+          <Key>
+            <PropertyRef Name="IdEntidade" />
+          </Key>
+          <Property Name="IdEntidade" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Designacao" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Movimentos">
+          <Key>
+            <PropertyRef Name="IdMovimento" />
+          </Key>
+          <Property Name="IdMovimento" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdArtigo" Type="int" Nullable="false" />
+          <Property Name="IdEntidade" Type="int" Nullable="false" />
+          <Property Name="NumeroDoc" Type="int" Nullable="false" />
+          <Property Name="Quantidade" Type="int" Nullable="false" />
+          <Property Name="TipoDeMovimento" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TipoDeArtigo">
+          <Key>
+            <PropertyRef Name="IdTipoDeArtigo" />
+          </Key>
+          <Property Name="IdTipoDeArtigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TipoDeArtigo" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Artigos_Movimentos">
+          <End Role="Movimentos" Type="Self.Movimentos" Multiplicity="0..1" />
+          <End Role="Artigos" Type="Self.Artigos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movimentos">
+              <PropertyRef Name="IdMovimento" />
+            </Principal>
+            <Dependent Role="Artigos">
+              <PropertyRef Name="IdMovimento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Artigos_TipoDeArtigo">
+          <End Role="TipoDeArtigo" Type="Self.TipoDeArtigo" Multiplicity="0..1" />
+          <End Role="Artigos" Type="Self.Artigos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoDeArtigo">
+              <PropertyRef Name="IdTipoDeArtigo" />
+            </Principal>
+            <Dependent Role="Artigos">
+              <PropertyRef Name="IdTipoDeArtigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Movimentos_Entidades">
+          <End Role="Entidades" Type="Self.Entidades" Multiplicity="1" />
+          <End Role="Movimentos" Type="Self.Movimentos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Entidades">
+              <PropertyRef Name="IdEntidade" />
+            </Principal>
+            <Dependent Role="Movimentos">
+              <PropertyRef Name="IdEntidade" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EconomatoModelStoreContainer">
+          <EntitySet Name="Artigos" EntityType="Self.Artigos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Entidades" EntityType="Self.Entidades" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Movimentos" EntityType="Self.Movimentos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoDeArtigo" EntityType="Self.TipoDeArtigo" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Artigos_Movimentos" Association="Self.FK_Artigos_Movimentos">
+            <End Role="Movimentos" EntitySet="Movimentos" />
+            <End Role="Artigos" EntitySet="Artigos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Artigos_TipoDeArtigo" Association="Self.FK_Artigos_TipoDeArtigo">
+            <End Role="TipoDeArtigo" EntitySet="TipoDeArtigo" />
+            <End Role="Artigos" EntitySet="Artigos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Movimentos_Entidades" Association="Self.FK_Movimentos_Entidades">
+            <End Role="Entidades" EntitySet="Entidades" />
+            <End Role="Movimentos" EntitySet="Movimentos" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EconomatoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Artigos">
+          <Key>
+            <PropertyRef Name="IdArtigo" />
+          </Key>
+          <Property Name="IdArtigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NomeArtigo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Preco" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="StockMinimo" Type="Int32" />
+          <Property Name="IdEntidade" Type="Int32" />
+          <Property Name="IdTipoDeArtigo" Type="Int32" />
+          <Property Name="IdMovimento" Type="Int32" />
+          <NavigationProperty Name="Movimentos" Relationship="Self.FK_Artigos_Movimentos" FromRole="Artigos" ToRole="Movimentos" />
+          <NavigationProperty Name="TipoDeArtigo" Relationship="Self.FK_Artigos_TipoDeArtigo" FromRole="Artigos" ToRole="TipoDeArtigo" />
+        </EntityType>
+        <EntityType Name="Entidades">
+          <Key>
+            <PropertyRef Name="IdEntidade" />
+          </Key>
+          <Property Name="IdEntidade" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Designacao" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Movimentos" Relationship="Self.FK_Movimentos_Entidades" FromRole="Entidades" ToRole="Movimentos" />
+        </EntityType>
+        <EntityType Name="Movimentos">
+          <Key>
+            <PropertyRef Name="IdMovimento" />
+          </Key>
+          <Property Name="IdMovimento" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdArtigo" Type="Int32" Nullable="false" />
+          <Property Name="IdEntidade" Type="Int32" Nullable="false" />
+          <Property Name="NumeroDoc" Type="Int32" Nullable="false" />
+          <Property Name="Quantidade" Type="Int32" Nullable="false" />
+          <Property Name="TipoDeMovimento" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Artigos" Relationship="Self.FK_Artigos_Movimentos" FromRole="Movimentos" ToRole="Artigos" />
+          <NavigationProperty Name="Entidades" Relationship="Self.FK_Movimentos_Entidades" FromRole="Movimentos" ToRole="Entidades" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TipoDeArtigo">
+          <Key>
+            <PropertyRef Name="IdTipoDeArtigo" />
+          </Key>
+          <Property Name="IdTipoDeArtigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TipoDeArtigo1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Artigos" Relationship="Self.FK_Artigos_TipoDeArtigo" FromRole="TipoDeArtigo" ToRole="Artigos" />
+        </EntityType>
+        <Association Name="FK_Artigos_Movimentos">
+          <End Role="Movimentos" Type="Self.Movimentos" Multiplicity="0..1" />
+          <End Role="Artigos" Type="Self.Artigos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movimentos">
+              <PropertyRef Name="IdMovimento" />
+            </Principal>
+            <Dependent Role="Artigos">
+              <PropertyRef Name="IdMovimento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Artigos_TipoDeArtigo">
+          <End Role="TipoDeArtigo" Type="Self.TipoDeArtigo" Multiplicity="0..1" />
+          <End Role="Artigos" Type="Self.Artigos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoDeArtigo">
+              <PropertyRef Name="IdTipoDeArtigo" />
+            </Principal>
+            <Dependent Role="Artigos">
+              <PropertyRef Name="IdTipoDeArtigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Movimentos_Entidades">
+          <End Role="Entidades" Type="Self.Entidades" Multiplicity="1" />
+          <End Role="Movimentos" Type="Self.Movimentos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Entidades">
+              <PropertyRef Name="IdEntidade" />
+            </Principal>
+            <Dependent Role="Movimentos">
+              <PropertyRef Name="IdEntidade" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EconomatoEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Artigos" EntityType="Self.Artigos" />
+          <EntitySet Name="Entidades" EntityType="Self.Entidades" />
+          <EntitySet Name="Movimentos" EntityType="Self.Movimentos" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="TipoDeArtigo" EntityType="Self.TipoDeArtigo" />
+          <AssociationSet Name="FK_Artigos_Movimentos" Association="Self.FK_Artigos_Movimentos">
+            <End Role="Movimentos" EntitySet="Movimentos" />
+            <End Role="Artigos" EntitySet="Artigos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Artigos_TipoDeArtigo" Association="Self.FK_Artigos_TipoDeArtigo">
+            <End Role="TipoDeArtigo" EntitySet="TipoDeArtigo" />
+            <End Role="Artigos" EntitySet="Artigos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Movimentos_Entidades" Association="Self.FK_Movimentos_Entidades">
+            <End Role="Entidades" EntitySet="Entidades" />
+            <End Role="Movimentos" EntitySet="Movimentos" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EconomatoModelStoreContainer" CdmEntityContainer="EconomatoEntities">
+          <EntitySetMapping Name="Artigos">
+            <EntityTypeMapping TypeName="EconomatoModel.Artigos">
+              <MappingFragment StoreEntitySet="Artigos">
+                <ScalarProperty Name="IdArtigo" ColumnName="IdArtigo" />
+                <ScalarProperty Name="NomeArtigo" ColumnName="NomeArtigo" />
+                <ScalarProperty Name="Preco" ColumnName="Preco" />
+                <ScalarProperty Name="StockMinimo" ColumnName="StockMinimo" />
+                <ScalarProperty Name="IdEntidade" ColumnName="IdEntidade" />
+                <ScalarProperty Name="IdTipoDeArtigo" ColumnName="IdTipoDeArtigo" />
+                <ScalarProperty Name="IdMovimento" ColumnName="IdMovimento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Entidades">
+            <EntityTypeMapping TypeName="EconomatoModel.Entidades">
+              <MappingFragment StoreEntitySet="Entidades">
+                <ScalarProperty Name="IdEntidade" ColumnName="IdEntidade" />
+                <ScalarProperty Name="Designacao" ColumnName="Designacao" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Movimentos">
+            <EntityTypeMapping TypeName="EconomatoModel.Movimentos">
+              <MappingFragment StoreEntitySet="Movimentos">
+                <ScalarProperty Name="IdMovimento" ColumnName="IdMovimento" />
+                <ScalarProperty Name="IdArtigo" ColumnName="IdArtigo" />
+                <ScalarProperty Name="IdEntidade" ColumnName="IdEntidade" />
+                <ScalarProperty Name="NumeroDoc" ColumnName="NumeroDoc" />
+                <ScalarProperty Name="Quantidade" ColumnName="Quantidade" />
+                <ScalarProperty Name="TipoDeMovimento" ColumnName="TipoDeMovimento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="EconomatoModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoDeArtigo">
+            <EntityTypeMapping TypeName="EconomatoModel.TipoDeArtigo">
+              <MappingFragment StoreEntitySet="TipoDeArtigo">
+                <ScalarProperty Name="IdTipoDeArtigo" ColumnName="IdTipoDeArtigo" />
+                <ScalarProperty Name="TipoDeArtigo1" ColumnName="TipoDeArtigo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
