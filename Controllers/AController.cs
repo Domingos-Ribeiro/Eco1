@@ -43,31 +43,6 @@ namespace Eco1.Controllers
         }
 
         
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Entidades entidades = db.Entidades.Find(id);
-            if (entidades == null)
-            {
-                return HttpNotFound();
-            }
-            return View(entidades);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdEntidade,Designacao")] Entidades entidades)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(entidades).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(entidades);
-        }
+        
     }
 }
