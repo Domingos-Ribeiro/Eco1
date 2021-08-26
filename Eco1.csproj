@@ -131,7 +131,6 @@
     <Compile Include="Artigos.cs">
       <DependentUpon>EconomatoModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\EntidadesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="EconomatoModel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -218,11 +217,6 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Entidades\Create.cshtml" />
-    <Content Include="Views\Entidades\Delete.cshtml" />
-    <Content Include="Views\Entidades\Details.cshtml" />
-    <Content Include="Views\Entidades\Edit.cshtml" />
-    <Content Include="Views\Entidades\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
