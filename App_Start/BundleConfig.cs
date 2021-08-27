@@ -23,7 +23,7 @@ namespace Eco1
                       "~/Scripts/bootstrap.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
+                      "~/Content/bootstrap-space-lab.css",
                       "~/Content/site.css"));
         }
     }
